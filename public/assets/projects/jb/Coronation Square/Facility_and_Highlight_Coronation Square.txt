@@ -1,0 +1,5 @@
+Higlights
+"[{""""icon"""":""""location"""", """"text"""":""""Freehold Waterfront Development -International Zoning""""},
+ {""""icon"""":""""city"""", """"text"""":""""2.5km Waterfront Promenad""""},
+ {""""icon"""":""""city"""", """"text"""":""""Close Proximity to Singapore - Via RTS Link""""},
+ {""""icon"""":""""lake"""", """"text"""":""""Easy Entry for Foreigners""""}]"

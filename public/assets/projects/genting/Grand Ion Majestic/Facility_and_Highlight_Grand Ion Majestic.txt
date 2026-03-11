@@ -1,0 +1,17 @@
+Highlights
+"[{""""""""icon"""""""":""""""""location"""""""", """"""""text"""""""":""""""""Stunning Property Next to Malaysia's Top Tourist Hot Spot""""""""},
+ {""""""""icon"""""""":""""""""city"""""""", """"""""text"""""""":""""""""Located on the Hilltop of Genting Highlands""""""""},
+ {""""""""icon"""""""":""""""""mountain"""""""", """"""""text"""""""":""""""""Breathtaking View of Titiwangsa Mountains""""""""},
+ {""""""""icon"""""""":""""""""investment"""""""", """"""""text"""""""":""""""""A Freehold Condotel Ideal for Investment""""""""}]"
+
+Facilities
+"[{""""""""icon"""""""":""""""""lobby"""""""", """"""""text"""""""":""""""""Grand Lobby""""""""},
+{""""""""icon"""""""":""""""""gym"""""""", """"""""text"""""""":""""""""Gymnasium Room""""""""},
+{""""""""icon"""""""":""""""""pool"""""""", """"""""text"""""""":""""""""Luxury Sky Pool""""""""},
+{""""""""icon"""""""":""""""""deck"""""""", """"""""text"""""""":""""""""Pavilion Deck""""""""},
+{""""""""icon"""""""":""""""""garden"""""""", """"""""text"""""""":""""""""Sky Garden""""""""},
+{""""""""icon"""""""":""""""""games"""""""", """"""""text"""""""":""""""""Games Room""""""""},
+{""""""""icon"""""""":""""""""theater"""""""", """"""""text"""""""":""""""""Theater Room""""""""},
+{""""""""icon"""""""":""""""""sauna"""""""", """"""""text"""""""":""""""""Sauna""""""""},
+{""""""""icon"""""""":""""""""jacuzzi"""""""", """"""""text"""""""":""""""""Jacuzzi""""""""},
+{""""""""icon"""""""":""""""""prayer-room"""""""", """"""""text"""""""":""""""""Surau""""""""}]"

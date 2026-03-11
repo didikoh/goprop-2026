@@ -1,0 +1,6 @@
+Higlights
+"[{""""""""icon"""""""":""""""""land"""""""", """"""""text"""""""":""""""""Spread Across 60 Acres Prime Land""""""""},
+ {""""""""icon"""""""":""""""""lifestyle"""""""", """"""""text"""""""":""""""""8 Phases of Meticulous Planning To Cater Every Lifestyle""""""""},
+ {""""""""icon"""""""":""""""""road"""""""", """"""""text"""""""":""""""""20-Minute Drive to Resorts World Genting""""""""},
+ {""""""""icon"""""""":""""""""stadium"""""""", """"""""text"""""""":""""""""Upcoming Midhill Arena Stadium""""""""}]"
+

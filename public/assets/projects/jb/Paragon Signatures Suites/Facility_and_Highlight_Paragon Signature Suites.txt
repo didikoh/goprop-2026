@@ -1,0 +1,26 @@
+Higlights
+"[{""""icon"""":""""location"""", """"text"""":"""" 1.14 Acres Land Area""""},
+ {""""icon"""":""""building"""", """"text"""":""""1 Tower""""},
+ {""""icon"""":""""flooring"""", """"text"""":""""484 Exclusive Units""""},
+ {""""icon"""":""""sustain"""", """"text"""":""""GreenRE Building""""}]"
+
+Facilities
+"[{""""icon"""":""""playroom"""", """"text"""":""""Kids Room""""},
+{""""icon"""":""""gym"""", """"text"""":""""Gym""""},
+{""""icon"""":""""playzone"""", """"text"""":""""Kids Zone""""},
+{""""icon"""":""""deck"""", """"text"""":""""Pool Deck""""},
+{""""icon"""":""""pool"""", """"text"""":""""Wading Pool""""},
+{""""icon"""":""""swimming"""", """"text"""":""""Swimming Pool""""},
+{""""icon"""":""""lift"""", """"text"""":""""Lift Lobby""""},
+{""""icon"""":""""games"""", """"text"""":""""Games Room""""},
+{""""icon"""":""""entertainment"""", """"text"""":""""Entertainment Room""""},
+{""""icon"""":""""function-hall"""", """"text"""":""""Function Room""""},
+{""""icon"""":""""terrace"""", """"text"""":""""Terrace Garden""""},
+{""""icon"""":""""lounge"""", """"text"""":""""Sunken Lounge""""},
+{""""icon"""":""""terrace"""", """"text"""":""""Leisure Terrace""""},
+{""""icon"""":""""female-prayer"""", """"text"""":""""Female Surau""""},
+{""""icon"""":""""male-prayer"""", """"text"""":""""Male Surau""""},
+{""""icon"""":""""office"""", """"text"""":""""Management Office""""},
+{""""icon"""":""""yoga"""", """"text"""":""""Yoga Room""""},
+{""""icon"""":""""function-room"""", """"text"""":""""Function Room""""},
+{""""icon"""":""""co-working-space"""", """"text"""":""""Co-office""""}]"

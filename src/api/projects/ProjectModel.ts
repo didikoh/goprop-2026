@@ -1,0 +1,41 @@
+
+export class ProjectModel {
+    id?: number;
+    placeId?: string;
+    name?: string;
+    status?: string;
+    description?: string;
+    address?: string;
+    website?: string;
+    golink?: string;
+    price?: string;
+    videos?: string;
+    panoramas?: string;
+    interior?: string;
+    developer?: string;
+    type?: string;
+    tenure?: string;
+    units?: string;
+    sizeMin?: string;
+    sizeMax?: string;
+    year?: string;
+    bedroomMin?: number;
+    bedroomMax?: number;
+    bathroomMin?: number;
+    bathroomMax?: number;
+    carparkMin?: number;
+    carparkMax?: number;
+    priceFromMin?: number;
+    priceFromMax?: number;
+    rentPriceMin?: number;
+    rentPriceMax?: number;
+    developerDesc?: string;
+    highlights?: string;
+    facilities?: string;
+    views?: number;
+    likes?: number;
+    coordinates?: string;
+    region?: string;
+    regionLong?: string;
+    chatbot_state?: boolean;
+}

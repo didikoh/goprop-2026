@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import {
   Scene,
   ArcRotateCamera,
@@ -7,6 +7,12 @@ import {
   Color4,
   ImportMeshAsync,
   ShadowGenerator,
+  Animation,
+  QuadraticEase, 
+  EasingFunction,
+  Vector3,
+  PointerEventTypes,
+  CubicEase,
 } from "@babylonjs/core";
 import "@babylonjs/loaders";
 import "@babylonjs/inspector";
@@ -16,8 +22,14 @@ import { useLoadingStore } from "../stores/loadingStore";
 import { initLighting } from "./sceneUtils/initLighting";
 import { initShadow } from "./sceneUtils/initShadow";
 import { initCamera } from "./sceneUtils/initCamera";
+import { ProjectModel } from "../api/projects/ProjectModel";
+import { rerenderCameraPos } from "../commons/HighEndFunctions";
 
-const MainScene = () => {
+interface MainSceneProps {
+  projectsList: ProjectModel[];
+}
+
+const MainScene = forwardRef(({ projectsList = [] }: MainSceneProps, ref) => {
   const initEngine = useRef(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const engineRef = useRef<Engine | null>(null);
@@ -32,6 +44,22 @@ const MainScene = () => {
 
   const setLoading = useLoadingStore((state) => state.setLoading);
 
+  const [uniProjectList, setUniProjectList] = useState<ProjectModel[]>([]);
+  const projectsListRef = useRef<ProjectModel[]>(projectsList);
+
+  useEffect(() => {
+    projectsListRef.current = projectsList;
+  }, [projectsList]);
+
+  useImperativeHandle(ref, () => ({
+    currentCamera,
+    currentScene,
+    setUniProjectList: (projectsList: ProjectModel[]) => {
+      setUniProjectList(projectsList);
+      projectsListRef.current = projectsList;
+    },
+  }));
+
   useEffect(() => {
     if (model && currentScene && currentCamera) {
       setLoading(105);
@@ -39,6 +67,62 @@ const MainScene = () => {
       return () => {};
     }
   }, [model, currentScene, currentCamera, setLoading]);
+
+  useEffect(() => {
+    if (!projectsList || projectsList.length === 0) return;
+
+    console.log("Projects[0] =", projectsList[0]);
+    setTimeout(() => {
+
+      setUniProjectList(projectsList);
+    }, 0)
+  }, [projectsList]);
+
+  function handleZoom(targetPosition: Vector3) {
+    const camera = currentCamera;
+    if (!camera) return;
+
+    const ease = new QuadraticEase();
+    ease.setEasingMode(EasingFunction.EASINGMODE_EASEINOUT);
+
+    // Smoothly animate the camera center (target) and distance (radius)
+    console.log(`Zoom triggered.`);
+    
+    Animation.CreateAndStartAnimation('zoomTarget', camera, 'target', 60, 30, camera.target, targetPosition, 0, ease);
+    Animation.CreateAndStartAnimation('zoomRadius', camera, 'radius', 60, 30, camera.radius, 2, 0, ease);
+  }
+
+  const zoomToTargetXX = (camera: ArcRotateCamera, targetPosition: any, scene: Scene) => {
+
+    const animation = new Animation(
+        "cameraZoom",
+        "position",
+        60,
+        Animation.ANIMATIONTYPE_VECTOR3,
+        Animation.ANIMATIONLOOPMODE_CONSTANT
+    );
+
+    const keys = [];
+
+    // start position
+    keys.push({
+        frame: 0,
+        value: camera.position.clone()
+    });
+
+    // end position
+    keys.push({
+        frame: 60,
+        value: targetPosition
+    });
+
+    animation.setKeys(keys);
+
+    camera.animations = [];
+    camera.animations.push(animation);
+
+    scene.beginAnimation(camera, 0, 60, false);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -101,6 +185,16 @@ const MainScene = () => {
                 animationGroup.start(true),
               ); //
             }
+
+            const allMeshes = scene.meshes; // List all meshes in the scene (all meshes from the "map")
+            console.log("All meshes in scene:", allMeshes.map((m) => m.name));
+
+            // If you need a structured list (mesh + descendants) for each mesh:
+            const meshHierarchy = allMeshes.map((m) => ({
+              root: m.name,
+              descendants: m.getChildMeshes(true).map((c) => c.name),
+            }));
+            console.log("Mesh hierarchy:", meshHierarchy);
           })
           .catch((error) => console.error("Failed to load model:", error)); // 捕获加载模型的错误
 
@@ -128,6 +222,42 @@ const MainScene = () => {
       }
 
       setCurrentScene(scene); // 更新状态以存储当前场景
+
+      scene.onPointerObservable.add((pointerInfo) => {
+        if (pointerInfo.type === PointerEventTypes.POINTERDOWN) {
+          const pickedMesh = pointerInfo.pickInfo?.pickedMesh;
+          if (pickedMesh) {
+            console.log("Picked mesh:", pickedMesh.name);
+  
+            const pickResult = scene.pick(
+                scene.pointerX,
+                scene.pointerY,
+                (mesh) => {
+                  return (mesh === pickedMesh);
+                }
+            );
+  
+            if (pickResult.hit) {
+              const pickedPoint = pickResult.pickedPoint; // Vector3
+              console.log("Clicked position:", pickedPoint);
+
+              const list = projectsListRef.current;
+              const index = list.findIndex((project) => project.name === pickedMesh.name);
+
+              if (index !== -1) {
+                const selMesh = list[index];
+                console.log("selMesh =", selMesh);
+                console.log(`Vector = ${pickedPoint?._x}, ${pickedPoint?._y}, ${pickedPoint?._z}`);
+                rerenderCameraPos(currentCamera, pickedPoint?._x ?? 0, pickedPoint?._y ?? 0, pickedPoint?._z ?? 0);
+              } else {
+                console.log("Picked mesh not found in projects list:", pickedMesh.name);
+              }
+            }
+
+            // TODO: PickedMesh to output
+          }
+        }
+      });
 
       // Inspector 快捷键绑定
       scene.onKeyboardObservable.add(({ event, type }) => {
@@ -157,11 +287,13 @@ const MainScene = () => {
     });
   }, []);
 
+  
+
   return (
     <div className={style.scene}>
       <canvas className={style.myCanvas} ref={canvasRef}></canvas>
     </div>
   );
-};
+});
 
 export default MainScene; // 导出 Scene 组件

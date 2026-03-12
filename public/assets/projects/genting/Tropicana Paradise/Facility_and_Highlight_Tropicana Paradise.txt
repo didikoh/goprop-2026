@@ -1,5 +1,0 @@
-Highlights
-"[{""""""""icon"""""""":""""""""hill"""""""", """"""""text"""""""":""""""""An Iconic Hilltop Destination""""""""},
- {""""""""icon"""""""":""""""""lifestyle"""""""", """"""""text"""""""":""""""""Explore Tranquil 308-Acre Masterplan""""""""},
- {""""""""icon"""""""":""""""""road"""""""", """"""""text"""""""":""""""""Freehold Ready-To-Build Hilltop Villa Lots""""""""},
- {""""""""icon"""""""":""""""""stadium"""""""", """"""""text"""""""":""""""""Nature-Infused Clubhouse With Luxury Facilities""""""""}]"

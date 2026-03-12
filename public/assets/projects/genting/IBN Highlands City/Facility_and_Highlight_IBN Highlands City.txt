@@ -1,5 +1,0 @@
-Highlights
-"[{""""""""icon"""""""":""""""""award"""""""", """"""""text"""""""":""""""""iDEA 2021 Best Mixed Development by Overseas Developer""""""""},
- {""""""""icon"""""""":""""""""convention"""""""", """"""""text"""""""":""""""""1st Large-Scale Convention Centre in Genting""""""""},
- {""""""""icon"""""""":""""""""size"""""""", """"""""text"""""""":""""""""300,000 sq.ft. IBNCC""""""""},
- {""""""""icon"""""""":""""""""building"""""""", """"""""text"""""""":""""""""2nd Largest Hotel Complex in Genting""""""""}]"

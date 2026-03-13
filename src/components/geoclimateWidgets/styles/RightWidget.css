@@ -1,0 +1,115 @@
+.widget-bottom-right {
+  user-select: none;
+  position: absolute;
+  bottom: 40px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 10;
+  align-items: center;
+}
+
+#compass-wrapper {
+  width: 48px;
+  height: 48px;
+  background-color: rgb(255, 255, 255, 0.6);
+  border-radius: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+
+  button {
+    background: transparent;
+    border: none;
+  }
+  .compass-pointer {
+    width: 10px;
+    height: 32px;
+  }
+  .compass-btn-left img {
+  }
+  .compass-btn-right img {
+    transform: scaleX(-1);
+  }
+}
+
+.weather-wrapper {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(255, 255, 255, 0.6);
+  border-radius: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.weather-image {
+  position: absolute;
+  width: 85%;
+  height: 85%;
+  //top: calc(0px - 55%);
+}
+
+.weather-text {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.mapType-wrapper {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(255, 255, 255, 0.6);
+  border-radius: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+
+  .mapType-text {
+    font-weight: bold;
+    font-size: 1.3rem;
+    pointer-events: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .widget-bottom-right {
+    bottom: unset;
+    top: 65px;
+    right: 10px;
+  }
+
+  #compass-wrapper {
+    width: 35px;
+    height: 35px;
+  }
+
+  .weather-wrapper {
+    width: 35px;
+    height: 35px;
+  }
+
+  .mapType-wrapper {
+    width: 35px;
+    height: 35px;
+    .mapType-text {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #compass-wrapper:hover {
+    transform: scale(1.1);
+  }
+
+  #mapType-wrapper:hover {
+    transform: scale(1.1);
+  }
+}

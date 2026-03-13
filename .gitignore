@@ -25,3 +25,7 @@ dist-ssr
 
 legacy/*
 *.glb
+
+.env
+.env.*
+/api

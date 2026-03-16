@@ -1,42 +1,26 @@
 import "./styles/BottomMenu.css";
 import { MenuItem } from "./models/MenuTypes";
+import { useBottomMenuStore } from "../../stores/bottomMenuStore";
+import { useSideMenuStore } from "../../stores/sideMenuStore";
+import { useProjectStore } from "../../stores/projectStore";
 
-interface MenuProp {
-    bottomMenu: string;
-    setBottomMenu: (menu: string) => void;
-    setSideMenu: () => void;
-}
-
-const BottomMenu = ({ bottomMenu, setBottomMenu, setSideMenu }: MenuProp) => {
+const BottomMenu = () => {
+  const { selectedMenu: bottomMenu, setSelectedMenu: setBottomMenu } = useBottomMenuStore();
+  const { setSelectedMenu: setSideMenu } = useSideMenuStore();
+  const { setProject: setSelectedProject } = useProjectStore();
   const menuIconDir = "src/assets/icons/BottomMenu";
   const privacyUrl = "https://goprop.ai/my-dev/privacy/";
 
+  const newMenuItem = (name: string, icon: string, iconHighlight: string) => {
+    return { name, icon, iconHighlight };
+  };
+
   const menuItems: Record<string, MenuItem> = {
-    home: {
-      name: "home",
-      icon: `${menuIconDir}/home.svg`,
-      iconHighlight: `${menuIconDir}/home-highlight.svg`,
-    },
-    projects: {
-      name: "projects",
-      icon: `${menuIconDir}/project.svg`,
-      iconHighlight: `${menuIconDir}/project-highlight.svg`,
-    },
-    chat: {
-      name: "chat",
-      icon: `${menuIconDir}/chat.svg`,
-      iconHighlight: `${menuIconDir}/chat-highlight.svg`,
-    },
-    amenities: {
-      name: "amenities",
-      icon: `${menuIconDir}/amenities.svg`,
-      iconHighlight: `${menuIconDir}/amenities-highlight.svg`,  
-    },
-    whatsapp: {
-      name: "whatsapp",
-      icon: `${menuIconDir}/whatsapp.svg`,
-      iconHighlight: `${menuIconDir}/whatsapp-highlight.svg`,
-    },
+    home: newMenuItem("home", `${menuIconDir}/home.svg`, `${menuIconDir}/home-highlight.svg`),
+    projects: newMenuItem("projects", `${menuIconDir}/project.svg`, `${menuIconDir}/project-highlight.svg`),
+    chat: newMenuItem("chat", `${menuIconDir}/chat.svg`, `${menuIconDir}/chat-highlight.svg`),
+    amenities: newMenuItem("amenities", `${menuIconDir}/amenities.svg`, `${menuIconDir}/amenities-highlight.svg`),
+    whatsapp: newMenuItem("whatsapp", `${menuIconDir}/whatsapp.svg`, `${menuIconDir}/whatsapp-highlight.svg`),
   };
 
   return (
@@ -62,9 +46,9 @@ const BottomMenu = ({ bottomMenu, setBottomMenu, setSideMenu }: MenuProp) => {
               onClick={() => {
                 setBottomMenu((bottomMenu === item.name) ? "home" : (item.name ?? ""));
                 if (item.name === "projects") {
-                  setSideMenu();
+                  setSideMenu("region");
                 }
-                //setSelectedProject(null);
+                setSelectedProject(null);
               }}
             >
               <img

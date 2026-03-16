@@ -1,0 +1,41 @@
+
+.region-menu__content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+.region-menu__item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        border-bottom: 1px solid #e0e0e0;
+        cursor: pointer;
+    }
+
+.region-menu__item:hover {
+        background: #d8e3ef;
+        font-weight: bold;
+    }
+
+.region-menu__item.active {
+        background: #d8e3ef;
+        font-weight: bold;
+    }
+
+.region-menu__item.disable {
+        color: #c3c3c3 !important;
+        background-color: gray !important;
+        pointer-events: none !important;
+    }
+
+.region-menu__item-icon {
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+    }

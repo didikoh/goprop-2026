@@ -1,19 +1,21 @@
-// import SideMenuHeader from "./SideMenuHeader";
-// import ProjectMenu from "./ProjectMenu";
 // import ProjectInfo from "./ProjectInfo";
 // import LandMarkInfo from "./LandMarkInfo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles/SideMenu.css";
 import RegionMenu from "./RegionMenu";
 import CloseIcon from '@mui/icons-material/Close';
-import type { ProjectModel } from "../../api/projects/ProjectModel";
+import { ProjectModel } from "../../api/projects/ProjectModel";
+import ProjectMenu from "./ProjectMenu";
+import { useSideMenuStore } from "../../stores/sideMenuStore";
+import { useRegionMenuStore } from "../../stores/regionMenuStore";
+import { useLocationStore } from "../../stores/locationStore";
+import { useBottomMenuStore } from "../../stores/bottomMenuStore";
+import { useProjectStore } from "../../stores/projectStore";
 
-interface SideMenuHeadProp {
-    sideMenu: string;
-    closeBtn: () => void;
-}
-
-export function SideMenuHeader({ sideMenu, closeBtn }: SideMenuHeadProp) {
+export function SideMenuHeader() {
+    const { selectedMenu: bottomMenu, setSelectedMenu: setBottomMenu } = useBottomMenuStore();
+    const { selectedMenu: sideMenu, setSelectedMenu: setSideMenu } = useSideMenuStore();
+    const { setProject: setSelectedProject } = useProjectStore();
 
     const getTitle = () => {
         switch (sideMenu) {
@@ -52,19 +54,11 @@ export function SideMenuHeader({ sideMenu, closeBtn }: SideMenuHeadProp) {
             <h1 className="side-menu__title">{getTitle()}</h1>
             <button
                 className="side-menu__close-button"
-                onClick={closeBtn}
-                // onClick={() => {
-                //     // if (isPhotoUI) {
-                //     //     setIsPhotoUI(false);
-                //     //     handleSideMenu(null);
-                //     // } else {
-                //         //handleSideMenu(null);
-                //     // }
-
-                //     setSelectedProject(null);
-                //     setBottomMenu("home");
-                //     setSideMenu("region");
-                // }}
+                onClick={() => {
+                    setSelectedProject(null);
+                    setBottomMenu("home");
+                    setSideMenu("region");
+                }}
             >
                 <CloseIcon />
             </button>
@@ -74,22 +68,40 @@ export function SideMenuHeader({ sideMenu, closeBtn }: SideMenuHeadProp) {
 
 interface SideMenuProp {
     projectsList: ProjectModel[];
-    sideMenu: string;
-    regionMenu: string;
-    setRegionMenu: (menu: string) => void;
-    closeBtn: () => void;
+    //sideMenu: string;
+    // regionMenu: string;
+    // setRegionMenu: (menu: string) => void;
+    // location: string;
+    // setLocation: (location: string) => void;
+    // setBottomMenu: (menu: string) => void;
+    //setSideMenu: (menu: string) => void;
+    // selectedProject: ProjectModel | null; 
+    // setSelectedProject: (project: ProjectModel | null) => void;
 }
 
-const SideMenu = ({ projectsList, sideMenu, regionMenu, setRegionMenu, closeBtn }: SideMenuProp) => {
+const SideMenu = ({ projectsList }: SideMenuProp) => {
   const [isSideMenuMinimized, setIsSideMenuMinimized] = useState<boolean>(false);
+  const [uniProjectsList, setUniProjectsList] = useState<ProjectModel[]>([]);
+  const { selectedMenu: sideMenu } = useSideMenuStore();
+  const { selectedMenu: regionMenu } = useRegionMenuStore();
+  const { location: location } = useLocationStore();
 
+  useEffect(() => {
+    console.log(`Location now = ${location}`);
+    console.log(`Region now = ${regionMenu}`);
+    setTimeout(() => {
+        setUniProjectsList(projectsList.filter((project) => (project.region === location)));
+    }, 0);
+    
+  }, [regionMenu, location, projectsList]);
 
+  const projectProp = { uniProjectsList, filterProject: "" };
 
   return (
     <div className={`side-menu ${isSideMenuMinimized ? "side-menu--minimized" : ""}`}>
-      <SideMenuHeader sideMenu={sideMenu} closeBtn={closeBtn} />
-      {sideMenu === "region" && <RegionMenu location="" regionMenu={regionMenu} setRegionMenu={setRegionMenu} />}
-      {/* {sideMenu === "project" && <ProjectMenu projectsList={projectsList} />} */}
+      <SideMenuHeader />
+      {sideMenu === "region" && <RegionMenu />}
+      {sideMenu === "project" && <ProjectMenu {...projectProp} />}
       {/* {sideMenu === "projectInfo" && <ProjectInfo purchaseMode={0} />}
       {sideMenu === "landmarkInfo" && <LandMarkInfo />} */}
     </div>

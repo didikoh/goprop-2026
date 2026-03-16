@@ -11,6 +11,10 @@ import type { ProjectModel } from "./api/projects/ProjectModel";
 function App() {
   const sceneRef = useRef<any>(null);
   const [projectsList, setProjectsList] = useState<ProjectModel[]>([]);
+  const [selectedProject, setSelectedProject] = useState<null | ProjectModel>(null);
+  const focusTargetRef = useRef<((targetMeshName: string) => void) | null>(
+    null
+  );
 
   const projectApi = new ProjectAPI();
   const location = 'all';
@@ -27,11 +31,7 @@ function App() {
     <>
       <MainLoading />
       <MainScene projectsList={projectsList} ref={sceneRef} />
-      <FullBottomWidget projectsList={projectsList} />
-      {/* <div className="widget">
-            <RightWidget mapType="3d" location="kl" />
-            <BottomMenu />
-      </div> */}
+      <FullBottomWidget projectsList={projectsList} selectedProject={selectedProject} setSelectedProject={setSelectedProject}/>
     </>
   );
 }

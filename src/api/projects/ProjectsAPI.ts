@@ -53,7 +53,7 @@ export class ProjectConstruct {
 
 export class ProjectAPI {
 
-    async fetchProjects(setProjectsList: React.Dispatch<React.SetStateAction<ProjectModel[]>>, location: string = "all") {
+    async fetchProjects(setProjectsList: (projects: ProjectModel[]) => void, location: string = "all") {
         let projectsListInt = [];
         try {
             const res = await fetchData(`${API_URL}/fetch_projects.php?location=${location}`);

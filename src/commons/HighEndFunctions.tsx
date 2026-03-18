@@ -1,4 +1,5 @@
 import { Scene, ArcRotateCamera, PointerEventTypes, PointerInfo, Vector3, MeshBuilder, Mesh, DynamicTexture, StandardMaterial, Color3, ActionManager, ExecuteCodeAction } from "@babylonjs/core";
+import type { ProjectModel } from "../api/projects/ProjectModel";
 
 export function Make3DLabels(scene: Scene | null, id?: number, x?: number, y?: number, z?: number) {
     if (scene) {
@@ -51,6 +52,22 @@ export function rerenderCameraPos(currentCamera: ArcRotateCamera | null, /*alpha
             currentCamera.computeWorldMatrix();
         });
     }
+}
+
+export function getPhotos(selectedProject: ProjectModel, photosUrl: string, location: string) {
+    if (!selectedProject) return [];
+    const projectName = selectedProject.name;
+    const url = `${photosUrl}/${location}/${projectName}/photos/`;
+    return Array.from({ length: 3 }, (_, i) => `${url}${i + 1}.webp`);
+};
+
+export function formatPriceToStr(price: number) {
+    const absNum = Math.abs(price);
+    
+    if (absNum >= 1_000_000_000) { return `${(absNum / 1_000_000_000).toFixed(1)} B` }
+    else if (absNum >= 1_000_000) { return `${(absNum / 1_000_000).toFixed(1)} M` }
+    else if (absNum >= 1_000) { return `${(absNum / 1_000).toFixed(1)} K` }
+    else { return `${absNum}`; }
 }
 
 

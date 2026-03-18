@@ -1,8 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './styles/AmenitiesMenu.css';
 // import { useAppContext } from '../context/AppContext';
 import axios from 'axios';
 import { API_URL } from '../../commons/Constants';
+import { useAmenityStore } from '../../stores/amenityStore';
+import { useSubMenuStore } from '../../stores/subMenuStore';
+import { useLocationStore } from '../../stores/locationStore';
+import { useDistanceStore } from '../../stores/distanceStore';
 
 interface TrainLine {
     id: string;
@@ -16,16 +20,12 @@ interface AmenitiesLabelProperties {
     mapURL: string,
 }
 
-interface AmenitiesProp {
-    location: string;
-    subMenu: string;
-    distance: number;
-    amenities: string;
-    setAmenities: (menu: string) => void;
-}
-
-const AmenitiesMenu = ({ location, subMenu, distance, amenities, setAmenities }: AmenitiesProp) => {
+const AmenitiesMenu = () => {
     //const { location, subMenu, amenities, setAmenities, distance, API_URL, applyAmenities } = useAppContext();
+    const { location } = useLocationStore();
+    const { distance } = useDistanceStore();
+    const { amenities, setAmenities } = useAmenityStore();
+    const { subMenu: subMenu } = useSubMenuStore();
     const [amenitiesSubValue, setAmenitiesSubValue] = useState<string>('');
     const [filterTransport, setFilterTransport] = useState<boolean>(false);
     const applyAmenities = useRef<(() => void) | null>(null);
@@ -138,39 +138,33 @@ const AmenitiesMenu = ({ location, subMenu, distance, amenities, setAmenities }:
 
     }
 
+    const btnPep = (id: string, imgLabel: string, imgClass: string, imgSrc: string, amenityExp: boolean, toggleFunc: (id: string) => void, style: React.CSSProperties) => {
+        return (
+            <button key={id} id={id} className={`amenities-btn ${(amenityExp) ? 'active' : ''}`} onClick={() => toggleFunc(id)}>
+                <img className={imgClass} src={imgSrc} alt={imgLabel} />
+                <span style={style}>{imgLabel}</span>
+                <div className={`indicator ${(amenityExp) ? 'active' : ''}`}></div>
+            </button>
+        );
+    };
+
     return (
         <div className='amenities-menu'>
             {(filterTransport) ? <div className={`amenities-btns`}>
                 {lines.map(({ id, color, label }) => (
-                    <button key={id} id={id} className={`amenities-btn ${amenitiesSubValue === id ? 'active' : ''}`} onClick={() => toggleFilter(id)}>
-                        <img
-                            className="train-filter-svg"
-                            src={`./assets/topmenu/trainSVG/${id}.svg`}
-                            alt={label}
-                        />
-                        <span id="train-filter-span" style={{ color }}>{label}</span>
-                        <div className={`indicator ${amenitiesSubValue === id ? 'active' : ''}`}></div>
-                    </button>
+                    btnPep(id, label, "train-filter-svg", `./assets/topmenu/trainSVG/${id}.svg`, (amenitiesSubValue === id), toggleFilter, { color })
                 ))}
             </div> : null}
-            <div className={`amenities-btns ${subMenu === "amenities" ? "" : "slide-out-amenities"}`} id="amenities-btns" >
+            <div className={`amenities-btns ${(subMenu === "amenities") ? "" : "slide-out-amenities"}`} id="amenities-btns" >
                 {[
                     { id: "shopping", icon: "shopping.svg", label: "Mall" },
                     { id: "transport", icon: location === "genting" ? "bus.svg" : "transport.svg", label: "Transport" },
                     { id: "airport", icon: "airport.svg", label: "Airport" },
                     { id: "medical", icon: "medical.svg", label: "Medical" },
-                    {
-                        id: "education",
-                        icon: "education.svg",
-                        label: "Education",
-                    },
+                    { id: "education", icon: "education.svg", label: "Education" },
                     { id: "embassy", icon: "embassy.svg", label: "Embassy" },
-                ].filter(({ id }) => !(location === "genting" && id === "embassy")).map(({ id, icon, label }) => (
-                    <button key={id} className={`amenities-btn ${amenities === id ? 'active' : ''}`} id={id} onClick={() => { toggleAmenity(id); }}>
-                        <img src={`./assets/topmenu/amenities/${icon}`} alt={label} />
-                        <span>{label}</span>
-                        <div className={`indicator ${amenities === id ? 'active' : ''}`}></div>
-                    </button>
+                ].filter(({ id }) => !((location === "genting") && (id === "embassy"))).map(({ id, icon, label }) => (
+                    btnPep(id, label, "", `./assets/topmenu/amenities/${icon}`, (amenities === id), toggleAmenity, {  })
                 ))}
             </div>
         </div>

@@ -10,7 +10,8 @@ import { useSideMenuStore } from "../../stores/sideMenuStore";
 import { useRegionMenuStore } from "../../stores/regionMenuStore";
 import { useLocationStore } from "../../stores/locationStore";
 import { useBottomMenuStore } from "../../stores/bottomMenuStore";
-import { useProjectStore } from "../../stores/projectStore";
+import { useProjectsArrStore, useProjectStore, usePurchaseStore } from "../../stores/projectStore";
+import ProjectInfo from "./ProjectInfo";
 
 export function SideMenuHeader() {
     const { selectedMenu: bottomMenu, setSelectedMenu: setBottomMenu } = useBottomMenuStore();
@@ -80,6 +81,8 @@ interface SideMenuProp {
 }
 
 const SideMenu = ({ projectsList }: SideMenuProp) => {
+    const { projects, setProjects } = useProjectsArrStore();
+    const { purchaseMode, setPurchaseMode } = usePurchaseStore();
   const [isSideMenuMinimized, setIsSideMenuMinimized] = useState<boolean>(false);
   const [uniProjectsList, setUniProjectsList] = useState<ProjectModel[]>([]);
   const { selectedMenu: sideMenu } = useSideMenuStore();
@@ -90,10 +93,10 @@ const SideMenu = ({ projectsList }: SideMenuProp) => {
     console.log(`Location now = ${location}`);
     console.log(`Region now = ${regionMenu}`);
     setTimeout(() => {
-        setUniProjectsList(projectsList.filter((project) => (project.region === location)));
+        setUniProjectsList(projects.filter((project) => (project.region === location)));
     }, 0);
     
-  }, [regionMenu, location, projectsList]);
+  }, [regionMenu, location, projects]);
 
   const projectProp = { uniProjectsList, filterProject: "" };
 
@@ -102,8 +105,8 @@ const SideMenu = ({ projectsList }: SideMenuProp) => {
       <SideMenuHeader />
       {sideMenu === "region" && <RegionMenu />}
       {sideMenu === "project" && <ProjectMenu {...projectProp} />}
-      {/* {sideMenu === "projectInfo" && <ProjectInfo purchaseMode={0} />}
-      {sideMenu === "landmarkInfo" && <LandMarkInfo />} */}
+      {sideMenu === "projectInfo" && <ProjectInfo purchaseMode={purchaseMode} />}
+      {/* {sideMenu === "landmarkInfo" && <LandMarkInfo />} */}
     </div>
   );
 };

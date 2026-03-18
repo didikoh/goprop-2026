@@ -17,7 +17,7 @@ interface ProjectCardProp {
 export function SpecItemCard({ icon, label, minParam, maxParam, minUnit, maxUnit }: any) {
     return (
         <div className="project-card2__spec-item">
-            <img src={`./assets/projectcard/${icon}.svg`} alt={`${label} Icon`} />
+            <img src={`./assets/projectinfo/icons/${icon}.svg`} alt={`${label} Icon`} />
             <span>{(minParam === maxParam) ? maxParam : `${minParam}${minUnit} - ${maxParam}${maxUnit}`}</span>
         </div>
     );

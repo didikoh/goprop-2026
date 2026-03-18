@@ -1,0 +1,30 @@
+
+.btn2 {
+  border: 1px solid #fff;
+  border-radius: 10px;
+  width: 150px;
+  height: 35px;
+}
+
+.btn2--primary {
+    background: none;
+    color: white;
+  }
+
+.btn2--secondary {
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    background: linear-gradient(90deg, #33c2ff, #0077ff);
+    color: white;
+  }
+
+.btn2--primary:hover {
+    background: linear-gradient(90deg, #33c2ff, #0077ff);
+  }
+
+.btn2--secondary:hover {
+    background: linear-gradient(90deg, #0077ff, #33c2ff);
+    color: white;
+  }
+
+

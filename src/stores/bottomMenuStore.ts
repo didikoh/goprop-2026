@@ -8,4 +8,4 @@ type BottomMenuState = {
 export const useBottomMenuStore = create<BottomMenuState>((set) => ({
   selectedMenu: "home",
   setSelectedMenu: (menu) => set({ selectedMenu: menu }),
-}));
+})); // "home" | "projects" | "chat" | "amenities" | "whatsapp"

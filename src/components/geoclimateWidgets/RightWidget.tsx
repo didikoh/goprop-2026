@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import "./styles/RightWidget.css";
 import axios from "axios";
+import { useMapStore } from "../../stores/mapStore";
+import { useLocationStore } from "../../stores/locationStore";
 //import { useDispatch, useSelector } from "react-redux";
 //import { AppDispatch, RootState } from "../../store/index";
 // import { setDirection } from "../../store/compassSlice";
@@ -14,12 +16,12 @@ interface WeatherData {
 }
 
 interface GeoProp {
-  mapType: string;
+  //mapType: string;
   location: string;
-  setMapType: (mapType: string) => void;
+  //setMapType: (mapType: string) => void;
 }
 
-const RightWidget = ({ mapType, location, setMapType }: GeoProp) => {
+const RightWidget = () => {
   // const {
   //   location,
   //   setWeather,
@@ -31,6 +33,8 @@ const RightWidget = ({ mapType, location, setMapType }: GeoProp) => {
   //   moveToNorth
   // } = useAppContext();
   //const compass_dir = useSelector((state: RootState) => state.compass.direction);
+  const { location } = useLocationStore();
+  const { mapType: mapType, setMapType: setMapType } = useMapStore();
   const moveToNorth = useRef<(() => void) | null>(null);
 
   //const dispatch = useDispatch<AppDispatch>();

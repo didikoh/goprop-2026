@@ -9,7 +9,7 @@ import { formatPriceToStr, getPhotos } from "../../commons/HighEndFunctions";
 import { keyplanUrl, photosUrl } from "../../commons/Constants";
 import { useLocationStore } from "../../stores/locationStore";
 import { useExtOverlayStore } from "../../stores/externalOverlayStore";
-import { useExtIframeStore } from "../../stores/externalOverlayStore copy";
+import { useExtIframeStore } from "../../stores/externalIframeStore";
 import Button from "./Button";
 import "./styles/Button.css";
 
@@ -266,8 +266,18 @@ const ProjectInfo = ({ purchaseMode }: PurchaseModeProp) => {
                 <div className="project-Info__specs-item project-Info__specs-item--price">
                   <strong>Price</strong>
                   <p style={{ fontFamily: "Bahnschrift, sans-serif", textAlign: "left" }}>
-                    {((selectedProject?.priceFromMin && selectedProject?.priceFromMax) ? <span>{(selectedProject?.rentPriceMin && selectedProject?.rentPriceMax) ? 'Buy: ' : ''}RM{formatPriceToStr(selectedProject?.priceFromMin)} - RM{formatPriceToStr(selectedProject?.priceFromMax)}</span> : null)}<br />
-                    {(selectedProject?.rentPriceMin && selectedProject?.rentPriceMax) ? <span>{(selectedProject?.priceFromMin && selectedProject?.priceFromMax) ? 'Rent: ' : ''}RM{formatPriceToStr(selectedProject?.rentPriceMin)} - RM{formatPriceToStr(selectedProject?.rentPriceMax)}</span> : null}
+                    {((selectedProject?.priceFromMin && selectedProject?.priceFromMax) ? 
+                    <span>{
+                      `${(selectedProject?.rentPriceMin && selectedProject?.rentPriceMax) ? 'Buy: ' : ''}` + 
+                      ((selectedProject?.priceFromMin === selectedProject?.priceFromMax) ? `RM${formatPriceToStr(selectedProject?.priceFromMin)}` : `RM${formatPriceToStr(selectedProject?.priceFromMin)} - RM${formatPriceToStr(selectedProject?.priceFromMax)}`)
+                    }</span> 
+                    : null)}<br />
+                    {(selectedProject?.rentPriceMin && selectedProject?.rentPriceMax) ? 
+                    <span>{
+                      `${(selectedProject?.priceFromMin && selectedProject?.priceFromMax) ? 'Rent: ' : ''}` + 
+                      ((selectedProject?.rentPriceMin === selectedProject?.rentPriceMax) ? `RM${formatPriceToStr(selectedProject?.rentPriceMin)}` : `RM${formatPriceToStr(selectedProject?.rentPriceMin)} - RM${formatPriceToStr(selectedProject?.rentPriceMax)}`)
+                    }</span> 
+                    : null}
                   </p>
                 </div>
               </div>

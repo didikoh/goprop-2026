@@ -1,20 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import "./App.css";
 import MainLoading from "./pages/MainLoading";
 import MainScene from "./scenes/MainScene";
 import { FullBottomWidget } from "./components/fullBottomWidgets/FullBottomWidget";
 import { ProjectAPI } from "./api/projects/ProjectsAPI";
-import type { ProjectModel } from "./api/projects/ProjectModel";
 import { useProjectsArrStore } from "./stores/projectStore";
+import InteractSelect from "./components/interactiveSelections/InteractSelect";
 
 function App() {
   const sceneRef = useRef<any>(null);
-  const [projectsList, setProjectsList] = useState<ProjectModel[]>([]);
   const { projects, setProjects } = useProjectsArrStore();
-  //const [selectedProject, setSelectedProject] = useState<null | ProjectModel>(null);
-  const focusTargetRef = useRef<((targetMeshName: string) => void) | null>(
-    null
-  );
+  const focusTargetRef = useRef<((targetMeshName: string) => void) | null>(null);
 
   const projectApi = new ProjectAPI();
   const location = 'all';
@@ -24,14 +20,15 @@ function App() {
       projectApi.fetchProjects(setProjects, location);
     }, 0);
 
-    sceneRef.current?.setUniProjectList(projectsList);
+    sceneRef.current?.setUniProjectList(projects);
   }, []);
 
   return (
     <>
       <MainLoading />
-      <MainScene projectsList={projectsList} ref={sceneRef} />
-      <FullBottomWidget projectsList={projectsList} />
+      <MainScene projectsList={projects} ref={sceneRef} />
+      <InteractSelect />
+      <FullBottomWidget />
     </>
   );
 }

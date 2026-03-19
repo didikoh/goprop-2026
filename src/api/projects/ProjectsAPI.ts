@@ -1,5 +1,4 @@
 import { fetchData } from "../../api/ApiFunctions";
-import React from "react";
 import type { ProjectModel } from "./ProjectModel";
 import { API_URL } from "../../commons/Constants";
 

@@ -64,9 +64,9 @@ export function getPhotos(selectedProject: ProjectModel, photosUrl: string, loca
 export function formatPriceToStr(price: number) {
     const absNum = Math.abs(price);
     
-    if (absNum >= 1_000_000_000) { return `${(absNum / 1_000_000_000).toFixed(1)} B` }
-    else if (absNum >= 1_000_000) { return `${(absNum / 1_000_000).toFixed(1)} M` }
-    else if (absNum >= 1_000) { return `${(absNum / 1_000).toFixed(1)} K` }
+    if (absNum >= 1_000_000_000) { return `${(absNum / 1_000_000_000).toFixed(4)} B` }
+    else if (absNum >= 1_000_000) { return `${(absNum / 1_000_000)} M` }
+    else if (absNum >= 1_000) { return `${(absNum / 1_000).toFixed(0)} K` }
     else { return `${absNum}`; }
 }
 

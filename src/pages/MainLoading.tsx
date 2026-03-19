@@ -23,7 +23,7 @@ const MainLoading = () => {
   }, [resetLoading]);
 
   useEffect(() => {
-    setLoaded(loading >= 101);
+    setLoaded(loading >= 100);
   }, [loading]);
 
   return (

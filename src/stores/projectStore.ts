@@ -21,6 +21,16 @@ export const useProjectStore = create<ProjectState>((set) => ({
   setProject: (project) => set({ project: project }),
 }));
 
+type SearchProjectState = {
+  filterProject: string;
+  setFilterProject: (filterProject: string) => void;
+};
+
+export const useSearchProjectStore = create<SearchProjectState>((set) => ({
+  filterProject: "",
+  setFilterProject: (filterProject) => set({ filterProject }),
+}));
+
 type ProjectsArrState = {
   projects: ProjectModel[];
   setProjects: (projects: ProjectModel[]) => void;

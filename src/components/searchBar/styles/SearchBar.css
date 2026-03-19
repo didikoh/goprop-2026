@@ -1,0 +1,27 @@
+.search-bar {
+    transition: width cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    i {
+        position: absolute;
+        left: 35px;
+        color: var(--primary-color);
+        font-size: 20px;
+    }
+
+    input {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #d8d8d8;
+        padding: 10px 10px 10px 10px;
+        border-radius: 10px;
+        margin: 10px;
+    }
+
+    input:focus {
+        outline: none;
+    }
+}

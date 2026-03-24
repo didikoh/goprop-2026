@@ -1,17 +1,21 @@
-
 import "./styles/ProjectInfo.css";
-import { FaRegImages } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { usePhotosStore, usePhotoUIIndStore, useUIPhotoStore } from "../../stores/uiPhotoStore";
-import { useProjectDataStore, useProjectsArrStore, useProjectStore, ProjectDataInt } from "../../stores/projectStore";
+import { useProjectDataStore, useProjectsArrStore, useProjectStore } from "../../stores/projectStore";
 import { useSideMenuMinimizeStore } from "../../stores/sideMenuStore";
 import { formatPriceToStr, getPhotos } from "../../commons/HighEndFunctions";
 import { keyplanUrl, photosUrl } from "../../commons/Constants";
 import { useLocationStore } from "../../stores/locationStore";
 import { useExtOverlayStore } from "../../stores/externalOverlayStore";
 import { useExtIframeStore } from "../../stores/externalIframeStore";
-import Button from "./Button";
+import Button from "./commonWidgets/Button";
 import "./styles/Button.css";
+import { SeePhoto } from "./commonWidgets/SeePhoto";
+import { GeoLocation } from "./commonWidgets/GeoLocation";
+import { ShareBtn } from "./commonWidgets/ShareBtn";
+import { KeyValueSpec, KeyValueSpecWrap } from "./commonWidgets/KeyValueSpec";
+import { DescriptionBox } from "./commonWidgets/DescriptionBox";
+import { ProjectName } from "./commonWidgets/ProjectName";
 
 interface PurchaseModeProp {
   purchaseMode: number;
@@ -191,31 +195,10 @@ const ProjectInfo = ({ purchaseMode }: PurchaseModeProp) => {
               ></i>
             </button>
           </div>
-          <div
-            className="project-Info__image"
-            onClick={() => setIsPhotoUI(true)}
-          >
-            <div className="project-Info__image-label">
-              <FaRegImages />
-              See Photo
-            </div>
-            <img src={photos[0]} alt="Project Image" />
-          </div>
-
+          <SeePhoto className01="project-Info__image" className02="project-Info__image-label" altName="Project Image" photos={photos} setIsPhotoUI={setIsPhotoUI} />
           <div className="project-Info__info1">
-            <div className="project-Info__name">
-              <i className="fa-solid fa-chevron-left" onClick={() => {}} />
-              <h2>{selectedProject?.name}</h2>
-              <i className="fa-solid fa-chevron-right" onClick={() => {}} />
-            </div>
-            <div className="project-Info__address">
-              <img
-                src="./assets/projectinfo/icons/interact-dot/location.svg"
-                alt=""
-                className="project-Info__icon"
-              />
-              <p>{selectedProject?.address}</p>
-            </div>
+            <ProjectName name={selectedProject?.name ?? ""} className="project-Info__name" prevLandmark={prevProject} nextLandmark={nextProject} />
+            <GeoLocation className01="project-Info__address" className02="project-Info__icon" location={selectedProject?.address ?? ""} />
             <div className="project-Info__wrapper">
               <div className="project-Info__views">
                 <p>{selectedProject?.views} views</p>
@@ -228,14 +211,7 @@ const ProjectInfo = ({ purchaseMode }: PurchaseModeProp) => {
                 />
                 <p>{selectedProject?.likes} likes</p>
               </div>
-              <div className="project-Info__share">
-                <p>Share</p>
-                <img
-                  src="./assets/projectinfo/icons/interact-dot/share.svg"
-                  alt=""
-                  className="project-Info__icon"
-                />
-              </div>
+              <ShareBtn className01="project-Info__share" className02="project-Info__icon" clickShare={() => {}} />
             </div>
           </div>
 
@@ -282,62 +258,17 @@ const ProjectInfo = ({ purchaseMode }: PurchaseModeProp) => {
                 </div>
               </div>
               <div className="project-Info__specs-wrapper">
-                <div className="project-Info__specs-item">
-                  <img
-                    className="project-Info__icon"
-                    src="./assets/projectinfo/icons/bed.svg"
-                    alt="Bedroom Icon"
-                  />
-                  <p>{(selectedProject?.bedroomMin === selectedProject?.bedroomMax) ? selectedProject?.bedroomMax : `${selectedProject?.bedroomMin} - ${selectedProject?.bedroomMax}`}</p>
-                </div>
-                <div className="project-Info__specs-item">
-                  <img
-                    className="project-Info__icon"
-                    src="./assets/projectinfo/icons/bath.svg"
-                    alt="Bathroom Icon"
-                  />
-                  <p>{(selectedProject?.bathroomMin === selectedProject?.bathroomMax) ? selectedProject?.bathroomMax : `${selectedProject?.bathroomMin} - ${selectedProject?.bathroomMax}`}</p>
-                </div>
-                <div className="project-Info__specs-item">
-                  <img
-                    className="project-Info__icon"
-                    src="./assets/projectinfo/icons/parking.svg"
-                    alt="Carpark Icon"
-                  />
-                  <p>{((selectedProject?.carparkMin === null) && (selectedProject.carparkMax === null)) ? `-` : ((selectedProject?.carparkMin === selectedProject?.carparkMax) ? selectedProject?.carparkMax : `${selectedProject?.carparkMin} - ${selectedProject?.carparkMax}`)}</p>
-                </div>
+                <KeyValueSpec className02="project-Info__specs-item" label="" data={(selectedProject?.bedroomMin === selectedProject?.bedroomMax) ? `${selectedProject?.bedroomMax}` : `${selectedProject?.bedroomMin} - ${selectedProject?.bedroomMax}`} imgClass="project-Info__icon" imgSrc="./assets/projectinfo/icons/bed.svg" imgAlt="Bedroom Icon" />
+                <KeyValueSpec className02="project-Info__specs-item" label="" data={(selectedProject?.bathroomMin === selectedProject?.bathroomMax) ? `${selectedProject?.bathroomMax}` : `${selectedProject?.bathroomMin} - ${selectedProject?.bathroomMax}`} imgClass="project-Info__icon" imgSrc="./assets/projectinfo/icons/bath.svg" imgAlt="Bathroom Icon" />
+                <KeyValueSpec className02="project-Info__specs-item" label="" data={((selectedProject?.carparkMin === null) && (selectedProject.carparkMax === null)) ? `-` : ((selectedProject?.carparkMin === selectedProject?.carparkMax) ? `${selectedProject?.carparkMax}` : `${selectedProject?.carparkMin} - ${selectedProject?.carparkMax}`)} imgClass="project-Info__icon" imgSrc="./assets/projectinfo/icons/parking.svg" imgAlt="Carpark Icon" />
               </div>
-              <div className="project-Info__specs-wrapper">
-                <div className="project-Info__specs-item">
-                  <img
-                    className="project-Info__icon"
-                    src="./assets/projectinfo/icons/size.svg"
-                    alt="Size Icon"
-                  />
-                  <p>{(selectedProject?.sizeMin === selectedProject?.sizeMax) ? selectedProject?.sizeMax : `${selectedProject?.sizeMin} sqft - ${selectedProject?.sizeMax} sqft`}</p>
-                </div>
-              </div>
-              <div className="project-Info__specs-wrapper">
-                <div className="project-Info__specs-item">
-                  <strong>Tenure</strong>
-                  {selectedProject?.tenure}
-                </div>
-              </div>
-              <div className="project-Info__specs-wrapper">
-                <div className="project-Info__specs-item">
-                  <strong>Completion Year</strong>
-                  {selectedProject?.year}
-                </div>
-              </div>
+              <KeyValueSpecWrap className01="project-Info__specs-wrapper" className02="project-Info__specs-item" label="" data={(selectedProject?.sizeMin === selectedProject?.sizeMax) ? `${selectedProject?.sizeMax}` : `${selectedProject?.sizeMin} sqft - ${selectedProject?.sizeMax} sqft`} imgClass="project-Info__icon" imgSrc="./assets/projectinfo/icons/size.svg" imgAlt="Size Icon" />
+              <KeyValueSpecWrap className01="project-Info__specs-wrapper" className02="project-Info__specs-item" label="Tenure" data={selectedProject?.tenure ?? ""} />
+              <KeyValueSpecWrap className01="project-Info__specs-wrapper" className02="project-Info__specs-item" label="Completion Year" data={selectedProject?.year ?? ""} />
             </div>
           </div>
 
-          <div className="project-Info__info4">
-            <div className="project-Info__description">
-              <strong>Description</strong>
-              <p>{selectedProject?.description}</p>
-            </div>
-          </div>
+          <DescriptionBox className01="project-Info__info4" className02="project-Info__description" titleLbl="Description" data={selectedProject?.description ?? ""} />
 
           <div className="project-Info__info5">
             <div className="project-Info__highlights">

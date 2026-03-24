@@ -14,11 +14,14 @@ import { useProjectsArrStore, useProjectStore, usePurchaseStore, useSearchProjec
 import ProjectInfo from "./ProjectInfo";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useUIPhotoStore } from "../../stores/uiPhotoStore";
+import LandMarkInfo from "./LandMarkInfo";
+import { useLandmarkStore } from "../../stores/landmarkStore";
 
 export function SideMenuHeader() {
     const { setSelectedMenu: setBottomMenu } = useBottomMenuStore();
     const { selectedMenu: sideMenu, setSelectedMenu: setSideMenu } = useSideMenuStore();
     const { setProject: setSelectedProject } = useProjectStore();
+    const { selectedLandmark, setSelectedLandmark } = useLandmarkStore();
     const { isPhotoUI, setIsPhotoUI } = useUIPhotoStore();
 
     const getTitle = () => {
@@ -29,8 +32,8 @@ export function SideMenuHeader() {
                 return "Project Menu";
             // case "projectInfo":
             //     return selectedProject?.name || "Project Name";
-            // case "landmarkInfo":
-            //     return selectedLandmark?.name || "Landmark Name";
+            case "landmarkInfo":
+                return selectedLandmark?.name || "Landmark Name";
             default:
                 return "Menu";
         }
@@ -97,7 +100,7 @@ const SideMenu = () => {
       {sideMenu === "region" && <RegionMenu />}
       {sideMenu === "project" && <ProjectMenu {...projectProp} />}
       {sideMenu === "projectInfo" && <ProjectInfo purchaseMode={purchaseMode} />}
-      {/* {sideMenu === "landmarkInfo" && <LandMarkInfo />} */}
+      {sideMenu === "landmarkInfo" && <LandMarkInfo />}
     </div>
   );
 };

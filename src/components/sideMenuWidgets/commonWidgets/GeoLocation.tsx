@@ -1,17 +1,16 @@
 
 interface GeoProp {
-    className01: string;
-    className02: string;
+    isLandmark: boolean;
     location: string;
 }
 
-export function GeoLocation({ className01, className02, location }: GeoProp) {
+export function GeoLocation({ isLandmark, location }: GeoProp) {
     return (
-        <div className={className01}>
+        <div className={`${(isLandmark) ? 'landmark-info' : 'project-Info'}__address`}>
             <img
                 src="./assets/projectinfo/icons/interact-dot/location.svg"
                 alt=""
-                className={className02}
+                className={`${(isLandmark) ? 'landmark-info' : 'project-Info'}__icon`}
             />
             <p>{location}</p>
         </div>

@@ -1,22 +1,27 @@
 
-interface KeyValueProp {
-    className01?: string;
-    className02: string;
-    label: string;
-    data: string;
+class ImgObjProp {
     imgClass?: string;
     imgSrc?: string;
     imgAlt?: string;
 }
 
-export function KeyValueSpec({ className02, label, data, imgClass, imgSrc, imgAlt }: KeyValueProp) {
+interface KeyValueProp {
+    isLandmark: boolean;
+    className01?: string;
+    className02?: string;
+    label: string;
+    data: string;
+    img?: ImgObjProp;
+}
+
+export function KeyValueSpec({ isLandmark, label, data, img }: KeyValueProp) {
     return (
-        <div className={className02}>
-            {(imgSrc) ? 
+        <div className={`${(isLandmark) ? 'landmark-info' : 'project-Info'}__specs-item`}>
+            {(img?.imgSrc) ? 
             <img
-                className={imgClass}
-                src={imgSrc}
-                alt={imgAlt}
+                className={img?.imgClass}
+                src={img?.imgSrc}
+                alt={img?.imgAlt}
             /> :
             <strong>{label}</strong>}
             <p>{data}</p>
@@ -24,10 +29,10 @@ export function KeyValueSpec({ className02, label, data, imgClass, imgSrc, imgAl
     );
 }
 
-export function KeyValueSpecWrap({ className01, className02, label, data, imgClass, imgSrc, imgAlt }: KeyValueProp) {
+export function KeyValueSpecWrap({ isLandmark, label, data, img }: KeyValueProp) {
     return (
-        <div className={className01}>
-            <KeyValueSpec className02={className02} label={label} data={data} imgClass={imgClass} imgSrc={imgSrc} imgAlt={imgAlt} />
+        <div className={`${(isLandmark) ? 'landmark-info' : 'project-Info'}__specs-wrapper`}>
+            <KeyValueSpec isLandmark={isLandmark} label={label} data={data} img={img} />
         </div>
     );
 }

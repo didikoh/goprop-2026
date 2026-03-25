@@ -45,6 +45,17 @@
     
   }
 
+.landmark-info__address {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+
+        p {
+            display: inline-block;
+            margin: 0;
+        }
+    }
+
   .landmark-info__image-label {
       display: flex;
       position: absolute;

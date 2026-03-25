@@ -1,5 +1,3 @@
-// import ProjectInfo from "./ProjectInfo";
-// import LandMarkInfo from "./LandMarkInfo";
 import { useEffect, useState } from "react";
 import "./styles/SideMenu.css";
 import RegionMenu from "./RegionMenu";
@@ -21,7 +19,7 @@ export function SideMenuHeader() {
     const { setSelectedMenu: setBottomMenu } = useBottomMenuStore();
     const { selectedMenu: sideMenu, setSelectedMenu: setSideMenu } = useSideMenuStore();
     const { setProject: setSelectedProject } = useProjectStore();
-    const { selectedLandmark, setSelectedLandmark } = useLandmarkStore();
+    const { selectedLandmark } = useLandmarkStore();
     const { isPhotoUI, setIsPhotoUI } = useUIPhotoStore();
 
     const getTitle = () => {

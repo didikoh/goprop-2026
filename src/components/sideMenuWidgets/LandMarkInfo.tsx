@@ -1,7 +1,5 @@
-
 import "./styles/LandMarkInfo.css";
 import { useEffect, useState } from "react";
-import Button from "./commonWidgets/Button";
 import { usePhotoUIIndStore, useUIPhotoStore } from "../../stores/uiPhotoStore";
 import { useLandmarkArrStore, useLandmarkStore } from "../../stores/landmarkStore";
 import { useExtIframeStore } from "../../stores/externalIframeStore";
@@ -12,6 +10,9 @@ import { ShareBtn } from "./commonWidgets/ShareBtn";
 import { KeyValueSpecWrap } from "./commonWidgets/KeyValueSpec";
 import { DescriptionBox } from "./commonWidgets/DescriptionBox";
 import { ProjectName } from "./commonWidgets/ProjectName";
+import { InfoFooter } from "./commonWidgets/InfoFooter";
+import { ProjectPhotos } from "./ProjectPhotos";
+import { HighlightsBox } from "./commonWidgets/LikesNViews";
 
 const LandMarkInfo = () => {
     const { isPhotoUI, setIsPhotoUI } = useUIPhotoStore();
@@ -25,6 +26,10 @@ const LandMarkInfo = () => {
   const [nextLandmarkTimeout, setNextLandmarkTimeout] = useState<number | null>(
     null
   );
+
+  const errorPhoto = (e: any) => {
+    (e.target as HTMLImageElement).src = "./assets/placeholder-image.webp";
+  };
   
   const nextLandmark = () => {
     if (nextLandmarkTimeout || !landmarks) return;
@@ -106,66 +111,30 @@ const LandMarkInfo = () => {
   return (
     <div className="landmark-info">
       {isPhotoUI ? (
-        <div className="landmark-info__photos">
-          {photos.map((photo: string, index: number) => (
-            <div
-              className="landmark-info__photo-container"
-              key={index}
-              onClick={() => setPhotoUIIndex(index)}
-            >
-              <img
-                className={`landmark-info__photo ${
-                  (index === photoUIIndex) ? "landmark-info__photo--active" : ""
-                }`}
-                src={photo}
-                alt={`Landmark Photo ${index + 1}`}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src =
-                    "./assets/placeholder-image.webp";
-                }}
-              />
-            </div>
-          ))}
-        </div>
+        <ProjectPhotos isLandmark={true} photos={photos} photoUIIndex={photoUIIndex} setPhotoUIIndex={setPhotoUIIndex} onError={errorPhoto} />
       ) : 
       (
         <div className="landmark-info__details">
-            <SeePhoto className01="landmark-info__image" className02="landmark-info__image-label" altName="Landmark Image" photos={photos} setIsPhotoUI={setIsPhotoUI} onError={(e) => {
-                (e.target as HTMLImageElement).src = "./assets/placeholder-image.webp";
-            }} />
+          <SeePhoto className01="landmark-info__image" className02="landmark-info__image-label" altName="Landmark Image" photos={photos} setIsPhotoUI={setIsPhotoUI} onError={errorPhoto} />
 
           <div className="landmark-info__info1">
             <ProjectName name={selectedLandmark?.landmarkName ?? ""} className="landmark-info__name" prevLandmark={prevLandmark} nextLandmark={nextLandmark} />
-            <GeoLocation className01="landmark-info__landmark-name" className02="landmark-info__icon" location={selectedLandmark?.landmarkName ?? ""} />
+            <GeoLocation isLandmark={true} location={selectedLandmark?.landmarkName ?? ""} />
             <div className="landmark-info__wrapper">
-              <div className="landmark-info__highlight">
-                <p>{selectedLandmark?.highLight}</p>
-              </div>
-              <ShareBtn className01="landmark-info__share" className02="landmark-info__icon" clickShare={handleShareClick} />
+              <HighlightsBox highLight={selectedLandmark?.highLight} />
+              <ShareBtn isLandmark={true} clickShare={handleShareClick} />
             </div>
           </div>
 
           <div className="landmark-info__info2">
             <div className="landmark-info__specs">
-                <KeyValueSpecWrap className01="landmark-info__specs-wrapper" className02="landmark-info__specs-item" label="Height" data={selectedLandmark?.height ?? ""} />
-                <KeyValueSpecWrap className01="landmark-info__specs-wrapper" className02="landmark-info__specs-item" label="Floors" data={selectedLandmark?.floor ?? ""} />
-                <KeyValueSpecWrap className01="landmark-info__specs-wrapper" className02="landmark-info__specs-item" label="Completion" data={selectedLandmark?.completeTime ?? ""} />
+              <KeyValueSpecWrap isLandmark={true} label="Height" data={selectedLandmark?.height ?? ""} />
+              <KeyValueSpecWrap isLandmark={true} label="Floors" data={selectedLandmark?.floor ?? ""} />
+              <KeyValueSpecWrap isLandmark={true} label="Completion" data={selectedLandmark?.completeTime ?? ""} />
             </div>
           </div>
-
-            <DescriptionBox className01="landmark-info__info3" className02="landmark-info__description" data={selectedLandmark?.description ?? ""} />
-
-          <div className="landmark-info__footer">
-            <div className="landmark-info__text">
-              <strong>Landmark</strong>
-              {selectedLandmark?.highLight}
-            </div>
-            <div className="landmark-info__button">
-              <Button variant="secondary" onClick={handleOfficialWebsiteClick}>
-                Visit Official Site
-              </Button>
-            </div>
-          </div>
+          <DescriptionBox isLandmark={true} data={selectedLandmark?.description ?? ""} />
+          <InfoFooter isLandmark={true} selectedLandmark={selectedLandmark} handleOnClick={handleOfficialWebsiteClick} />
         </div>
       )}
     </div>

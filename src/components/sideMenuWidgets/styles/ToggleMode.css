@@ -1,11 +1,11 @@
-.toggle-container {
+.toggle-container-project {
   display: flex;
-  background: #f1f1f1;
+  background: #ffffff;
   padding: 4px;
   margin: 10px;
   border-radius: 50px;
   width: 90%;
-  background: linear-gradient(90deg, #c2bbbb, #c2bbbb);
+  border: 1px solid #d8d8d8;
 }
 
 .button {
@@ -16,8 +16,8 @@
   cursor: pointer;
   border-radius: 50px;
   transition: all 0.3s ease;
-  font-weight: 500;
-  color: #666;
+  font-weight: 700;
+  color: rgb(0, 0, 0, 0.4);
   text-align: center;
 }
 
@@ -28,5 +28,5 @@
 }
 
 .toggle-button-container {
-        background: linear-gradient(90deg, #33c2ff, #0077ff);
+  background: linear-gradient(90deg, #33c2ff, #0077ff);
 }

@@ -18,7 +18,7 @@ import { useLandmarkStore } from "../../stores/landmarkStore";
 export function SideMenuHeader() {
     const { setSelectedMenu: setBottomMenu } = useBottomMenuStore();
     const { selectedMenu: sideMenu, setSelectedMenu: setSideMenu } = useSideMenuStore();
-    const { setProject: setSelectedProject } = useProjectStore();
+    const { project: selectedProject, setProject: setSelectedProject } = useProjectStore();
     const { selectedLandmark } = useLandmarkStore();
     const { isPhotoUI, setIsPhotoUI } = useUIPhotoStore();
 
@@ -28,8 +28,8 @@ export function SideMenuHeader() {
                 return "All Projects";
             case "project":
                 return "Project Menu";
-            // case "projectInfo":
-            //     return selectedProject?.name || "Project Name";
+            case "projectInfo":
+                return selectedProject?.name || "Project Name";
             case "landmarkInfo":
                 return selectedLandmark?.name || "Landmark Name";
             default:
@@ -82,8 +82,8 @@ const SideMenu = () => {
   const { filterProject } = useSearchProjectStore();
 
   useEffect(() => {
-    console.log(`Location now = ${location}`);
-    console.log(`Region now = ${regionMenu}`);
+    // console.log(`Location now = ${location}`);
+    // console.log(`Region now = ${regionMenu}`);
     setTimeout(() => {
         setUniProjectsList(projects.filter((project) => (project.region === location)));
     }, 0);

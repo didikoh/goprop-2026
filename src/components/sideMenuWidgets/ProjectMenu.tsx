@@ -51,7 +51,7 @@ const ProjectMenu = ({ uniProjectsList, filterProject }: ProjectListProp) => {
   return (
     <div className="project-menu">
       <SearchBar />
-      <div className="toggle-container">
+      <div className="toggle-container-project">
         <ProjButton mode='buy' setMode={setMode} classMode={(mode === 'buy') ? 'active' : ''} />
         <ProjButton mode='rent' setMode={setMode} classMode={(mode === 'rent') ? 'active' : ''} />
         <ProjButton mode='all' setMode={setMode} classMode={(mode === 'all') ? 'active' : ''}/>

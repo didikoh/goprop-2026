@@ -21,6 +21,8 @@ import { ActionButtonsContainer } from "./commonWidgets/ActionButton";
 import { LikesNo, ViewsNo } from "./commonWidgets/LikesNViews";
 import { ProjectPhotos } from "./ProjectPhotos";
 import { InfoFooter } from "./commonWidgets/InfoFooter";
+import { useRegionMenuStore } from "../../stores/regionMenuStore";
+import type { ProjectModel } from "../../api/projects/ProjectModel";
 
 interface PurchaseModeProp {
   purchaseMode: number;
@@ -37,6 +39,7 @@ const ProjectInfo = ({ purchaseMode }: PurchaseModeProp) => {
   const { location } = useLocationStore();
   const { project: selectedProject, setProject: setSelectedProject } = useProjectStore();
   const { isSideMenuMinimized, setIsSideMenuMinimized } = useSideMenuMinimizeStore();
+  const { selectedMenu: regionMenu } = useRegionMenuStore();
 
   const [highlights, setHighlights] = useState<any[]>([]);
   const [facilities, setFacilities] = useState<any[]>([]);
@@ -45,13 +48,20 @@ const ProjectInfo = ({ purchaseMode }: PurchaseModeProp) => {
     null
   );
 
+  // console.log(`Projects = ${JSON.stringify(projects)}`);
+  // console.log(`Projects (in current location) = ${JSON.stringify(projects.filter((project) => (project.region === regionMenu)))}, length = ${projects.filter((project) => (project.region === regionMenu)).length}`);
+  let regionProjects: ProjectModel[] = [];
+  setTimeout(() => {
+    regionProjects = projects.filter((project) => (project.region === regionMenu));
+  }, 0);
+
   const nextProject = () => {
     if (nextProjectTimeout) return;
-    const projectIndex = projects.findIndex(
-      (project: any) => project.name === selectedProject?.name
+    const projectIndex = regionProjects.findIndex(
+      (project: any) => (project.name === selectedProject?.name)
     );
-    const nextIndex = (projectIndex + 1) % projects.length;
-    setSelectedProject(projects[nextIndex]);
+    const nextIndex = (projectIndex + 1) % regionProjects.length;
+    setSelectedProject(regionProjects[nextIndex]);
     // if (focusTargetRef.current) {
     //   focusTargetRef.current(projects[nextIndex].name);
     // }
@@ -62,11 +72,11 @@ const ProjectInfo = ({ purchaseMode }: PurchaseModeProp) => {
 
   const prevProject = () => {
     if (nextProjectTimeout) return;
-    const projectIndex = projects.findIndex(
-      (project: any) => project.name === selectedProject?.name
+    const projectIndex = regionProjects.findIndex(
+      (project: any) => (project.name === selectedProject?.name)
     );
-    const prevIndex = (projectIndex - 1 + projects.length) % projects.length;
-    setSelectedProject(projects[prevIndex]);
+    const prevIndex = (projectIndex - 1 + regionProjects.length) % regionProjects.length;
+    setSelectedProject(regionProjects[prevIndex]);
     // if (focusTargetRef.current) {
     //   focusTargetRef.current(projects[prevIndex].name);
     //   console.log("Focusing on project:", projects[prevIndex].name);
@@ -200,7 +210,7 @@ const ProjectInfo = ({ purchaseMode }: PurchaseModeProp) => {
           </div>
           <SeePhoto className01="project-Info__image" className02="project-Info__image-label" altName="Project Image" photos={photos} setIsPhotoUI={setIsPhotoUI} />
           <div className="project-Info__info1">
-            <ProjectName name={selectedProject?.name ?? ""} className="project-Info__name" prevLandmark={prevProject} nextLandmark={nextProject} />
+            <ProjectName isLandmark={false} name={selectedProject?.name ?? ""} prevLandmark={prevProject} nextLandmark={nextProject} />
             <GeoLocation isLandmark={false} location={selectedProject?.address ?? ""} />
             <div className="project-Info__wrapper">
               <ViewsNo no={selectedProject?.views ?? 0} />

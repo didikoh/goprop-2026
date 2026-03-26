@@ -118,7 +118,7 @@ const LandMarkInfo = () => {
           <SeePhoto className01="landmark-info__image" className02="landmark-info__image-label" altName="Landmark Image" photos={photos} setIsPhotoUI={setIsPhotoUI} onError={errorPhoto} />
 
           <div className="landmark-info__info1">
-            <ProjectName name={selectedLandmark?.landmarkName ?? ""} className="landmark-info__name" prevLandmark={prevLandmark} nextLandmark={nextLandmark} />
+            <ProjectName isLandmark={true} name={selectedLandmark?.landmarkName ?? ""} prevLandmark={prevLandmark} nextLandmark={nextLandmark} />
             <GeoLocation isLandmark={true} location={selectedLandmark?.landmarkName ?? ""} />
             <div className="landmark-info__wrapper">
               <HighlightsBox highLight={selectedLandmark?.highLight} />
@@ -134,9 +134,9 @@ const LandMarkInfo = () => {
             </div>
           </div>
           <DescriptionBox isLandmark={true} data={selectedLandmark?.description ?? ""} />
-          <InfoFooter isLandmark={true} selectedLandmark={selectedLandmark} handleOnClick={handleOfficialWebsiteClick} />
         </div>
       )}
+      <InfoFooter isLandmark={true} selectedLandmark={selectedLandmark} handleOnClick={handleOfficialWebsiteClick} />
     </div>
   );
 };

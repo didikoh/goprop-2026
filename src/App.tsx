@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import "./App.css";
+import "./components/topMenuWidgets/styles/TopMenu.css";
 import MainLoading from "./pages/MainLoading";
 import MainScene from "./scenes/MainScene";
 import { FullBottomWidget } from "./components/fullBottomWidgets/FullBottomWidget";
@@ -8,9 +9,8 @@ import { useProjectsArrStore } from "./stores/projectStore";
 import InteractSelect from "./components/interactiveSelections/InteractSelect";
 import { LandmarkAPI } from "./api/projects/LandmarkAPI";
 import { useLandmarkArrStore, useLandmarkStore } from "./stores/landmarkStore";
-import LandMarkInfo from "./components/sideMenuWidgets/LandMarkInfo";
 import "./components/sideMenuWidgets/styles/SideMenu.css";
-import { SideMenuHeader } from "./components/sideMenuWidgets/SideMenu";
+import TopMenu from "./components/topMenuWidgets/TopMenu";
 
 function App() {
   const sceneRef = useRef<any>(null);
@@ -38,10 +38,7 @@ function App() {
       <MainLoading />
       <MainScene projectsList={projects} ref={sceneRef} />
       <InteractSelect />
-      {/* <div className={`side-menu`}>
-        <SideMenuHeader />
-        <LandMarkInfo />
-      </div> */}
+      <TopMenu />
       <FullBottomWidget />
     </>
   );
